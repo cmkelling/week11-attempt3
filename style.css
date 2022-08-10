@@ -1,6 +1,6 @@
 body {
     margin:0;
-    background:darkgoldenrod;
+    background:rgb(10, 35, 30);
 }
 
 
@@ -21,12 +21,11 @@ body {
 
 #restart:hover {
     cursor: pointer;
-    /* makes button slightly go up when hovered over it is nice. planning on using this to help create the illusion of movement for the players */
     transform: translateY(-3px);
 }
 
 .square {
-    border: 10px gray solid;
+    border: 5px gray solid;
     background-color: hsla(247, 52%, 55%, 0.3);
     font-size: 150px;
     text-align: center;
