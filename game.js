@@ -2,7 +2,7 @@
 var num_of_cols = num_of_rows = 3;
 $(document).ready(function(){
 	$("#restart_game").bind("click", restartGame);
-	// Expand jQuery with some selectors to help our goal
+	// Expand jQuery with some selectors
 	$.expr[":"].mod = function(el, i, m) {
 		return i % m[3] === 0
 	};  
@@ -17,9 +17,7 @@ function initGame(){
 	$("#game_map").empty();
 	for(var i=0; i<num_of_cols*num_of_rows;++i)
 	{
-		var cell = $("<div></div>")
-					.addClass("cell")
-					.appendTo("#game_map");
+		var cell = $("<div></div>").addClass("cell").appendTo("#game_map");
 		// Add the line breaks
 		if ( i % num_of_cols === 0 ){
 			cell.before('<div class="clear"></div>');
@@ -98,7 +96,7 @@ function checkAndProcessWin(){
 	var win = false;
 	if ( marked_cells.length >= num_of_cols )
 	{
-		/* Check the rows */
+		// Check the rows 
 		var cells = $("#game_map .cell");
 		var cells_inspected = {};
 		for (var row=1; row <= num_of_rows && !win; ++row ) 
@@ -109,7 +107,7 @@ function checkAndProcessWin(){
 								.filter("."+current_class);
 			if ( cells_inspected.length == num_of_cols ) win = true;
 		}
-		/* Check the cols */
+		// Check the cols
 		for (var col=0; col <= num_of_cols && !win; ++col ) 
 		{
 			cells_inspected = cells
@@ -118,7 +116,7 @@ function checkAndProcessWin(){
 								
 			if ( cells_inspected.length == num_of_rows ) win = true;
 		}
-		/* Check the diagonals */
+		// Check the diagonals
 		// We always have 2 diagonals
 		// From left up to right down
 		if ( !win )
@@ -129,9 +127,7 @@ function checkAndProcessWin(){
 			if ( cells_inspected.length == num_of_rows ) win = true;
 			else{
 				// From right down to left up
-				cells_inspected = cells
-									.filter(":mod("+(num_of_rows-1)+"):not(:last,:first)")
-									.filter("."+current_class);
+				cells_inspected = cells.filter(":mod("+(num_of_rows-1)+"):not(:last,:first)").filter("."+current_class);
 				if ( cells_inspected.length == num_of_rows ) win = true;					
 			}
 		}
