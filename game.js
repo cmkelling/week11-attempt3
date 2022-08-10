@@ -35,7 +35,7 @@ function disableGame(ev){
 function restartGame(ev){
 	ev.preventDefault();
 	$(".end_game").hide();
-	current_player = 0;
+	current_player = O;
 	initGame();
 	return false;
 }
@@ -80,7 +80,7 @@ function leaveCell(ev){
 
 function playMove(ev){
     var cell = $(this);
-    cell.addClass(players[current_player].style).addClass("marked").text(players[current_player].mark).trigger("mouseout").unbind("click mouseover mouseout");
+    cell.addClass(players[current_player].style).addClass("marked").text(players[current_player].mark).trigger("mouseout").click.unbind("click mouseover mouseout");
 
 
     if(!checkAndProcessWin() ) {
