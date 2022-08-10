@@ -11,6 +11,7 @@ const startGame = () => {
 
 //to make square clickable
     squares.forEach(square => {
+        console.log("table/ box where an x or o can appear", square);
         square.addEventListener('click', squareClicked);
     });
 
