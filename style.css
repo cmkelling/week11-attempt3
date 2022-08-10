@@ -1,10 +1,10 @@
-.game_map{
+#game_map{
     border: 1px solid black;
     clear: both;
     float: left;
 }
 
-.game_map.cell{
+#game_map.cell{
     cursor: pointer;
     float: left;
     border: 1px solid black;
