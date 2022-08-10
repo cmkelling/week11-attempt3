@@ -1,11 +1,11 @@
-let square = $('.square');
+let square = ($('.square'));
 let ticGird = $('#tic.Grid');
 const squares = Array.from(document.getElementsByClassName("square"));
 let playerO = 'O';
 let playerX = 'X';
 let ticroundtxt = document.getElementById('ticroundtxt');
 let winnerBanner = $('#winnerIsBanner');
-//to start w/O
+//to start
 let currentPlayer = playerO;
 const startGame = () => {
 
