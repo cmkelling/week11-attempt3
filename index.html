@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-grid.css">
-    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -26,8 +26,8 @@
 		</tr>
 		<tr>
 			<th>Won</th>
-			<td id="player1_wins">0</td>
-			<td id="player2_wins">0</td>
+			<td id="playerX_wins">0</td>
+			<td id="playerO_wins">0</td>
 		</tr>
 	</table>
 	<h3 id="winner" class="end_game">
@@ -38,11 +38,9 @@
         <button id="restart_game" type="reset">reset</button>
 	</div>
 
-
+    <script src="game.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="node_modules/jquery/dist/jquery.js"></script>
-    <script src="style.css"></script>
-    <script src="game.js"></script>
     
 </body>
 </html>

@@ -20,7 +20,7 @@
     line-height:0px
 }
 
-#game_map.playerX_cell{
+#game_map, playerX_cell{
     color: cornflowerblue;
 }
 
@@ -28,7 +28,7 @@
     color:blueviolet;
 }
 
-#game_map .win{
+#game_map.win{
 	background: #b0d8c2;
 }
 #player_mark, #player_name{
