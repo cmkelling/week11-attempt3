@@ -14,7 +14,7 @@ body {
 #restart {
     padding: 10px 10px; 
     background-color: cadetblue;
-    color: white;
+    color: black;
     font-size: 20px;
     transition: 200ms transform;
 }
