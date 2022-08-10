@@ -1,141 +1,124 @@
-//Table set up
-var num_of_cols = num_of_rows = 3;
-($(document).jquery(function(){
-	$("#restart_game").click.bind("click", restartGame);
-	// Expand jQuery with some selectors
-	$.expr["Selectors#pseudos"].mod = function(el, i, m) {
-		return i % m[3] === 0
-	};  
-	$.expr["Selectors#pseudos"].sub_mod = function(el, i, m) {
-		var params = m[3].split(",");
-		return (i-params[0]) % params[1] === 0
-	};  
-	initGame();
-}));
+let square = $('.square');
+let ticGird = $('#tic.Grid');
+const squares = Array.from(document.getElementsByClassName("square"));
+let playerO = 'O';
+let playerX = 'X';
+let ticroundtxt = document.getElementById('ticroundtxt');
+let winnerBanner = $('#winnerIsBanner');
+//to start w/O
+let currentPlayer = playerO;
+const startGame = () => {
 
-function initGame(){
-	$("#game_map").empty();
-	for(var i=0; i<num_of_cols*num_of_rows;++i)
-	{
-		var cell = $("<div></div>").addClass("cell").appendTo("#game_map");
-		// Add the line breaks
-		if ( i % num_of_cols === 0 ){
-			cell.before('<div class="clear"></div>');
-		}
-	
-	}
+//to make square clickable
+    squares.forEach(square => {
+        square.addEventListener('click', squareClicked);
+    });
 
-	$("#game_map.cell").click.bind("click", playMove).bind('mouseover', hoverCell).bind('mouseout', leaveCell);
+    function squareClicked(e) {
+        //currenttarget = squares id
+        const id = e.currentTarget;
+        //to change the square to currentPlayer
+        squares[id] = currentPlayer;
+        e.currentTarget.innerHTML = currentPlayer;
+        //if player has won then the game will cease 
+        if (winOccurs(currentPlayer)) {
+        // txt is cleared for turn order
+            ticroundtxt.innerHTML = `${currentPlayer} won`;
+            return;
+        }
+        //to rotate the player order
+        currentPlayer = currentPlayer === playerO ? playerX : playerO;
+        //to reflect the turn order 
+        ticroundtxt.innerHTML = `${currentPlayer}'s turn`;
 
-	initTurn(current_player);
-};
-function disableGame(ev){
-	$("#game_map.cell").click.unbind("click").unbind("mouseover").unbind("mouseout");
-};
-function restartGame(ev){
-	ev.preventDefault();
-	$(".end_game").hide();
-	current_player = O;
-	initGame();
-	return false;
-}
-//player set up
-var playerX= {
-    mark: 'X',
-    name: 'Player X',
-    style: 'playerX_cell',
-    score_el: 'playerX_wins',
-    wins: 0
-};
-
-var playerO = {
-    mark: 'O',
-    name: 'Player O',
-    style: 'playerO_cell',
-    score_el: 'playerO_wins',
-    wins: 0
-};
-
-var players = [playerX, playerO];
-var current_player = 0;
-
-function initTurn(){
-    $("#player_name").text(players[current_player].name);
-    $("player_mark").text(players[current_player].mark);
-}
-
-$(".game_map.cell").click.bind("click", playMove).bind('mouseover', hoverCell).bind("mouseout", leaveCell);
-
-function hoverCell(ev){
-    $(this).addClass("hover");
-    return false;
-};
-
-function leaveCell(ev){
-    $(this).removeClass("hover");
-    return false;
-};
-
-//moves
-
-function playMove(ev){
-    var cell = $(this);
-    cell.addClass(players[current_player].style).addClass("marked").text(players[current_player].mark).trigger("mouseout").click.unbind("click mouseover mouseout");
-
-
-    if(!checkAndProcessWin() ) {
-    current_player = (++current_player) % players.length;
-    initTurn(current_player);
     }
-    return false;
-};
+}
 
-function checkAndProcessWin(){
-	var current_class = players[current_player].style;
-	var marked_cells = $("#game_map ."+current_class);
-	var win = false;
-	if ( marked_cells.length >= num_of_cols )
-	{
-		// Check the rows 
-		var cells = $("#game_map .cell");
-		var cells_inspected = {};
-		for (var row=1; row <= num_of_rows && !win; ++row ) 
-		{
-			cells_inspected = cells.filter(":lt("+num_of_cols*row+")").filter(":eq("+(num_of_cols*(row-1))+"),:gt("+(num_of_cols*(row-1))+")").filter("."+current_class);
-			if ( cells_inspected.length == num_of_cols ) win = true;
-		}
-		// Check the cols
-		for (var col=0; col <= num_of_cols && !win; ++col ) 
-		{
-			cells_inspected = cells.filter(":sub_mod("+col+","+num_of_rows+")").filter("."+current_class);
-								
-			if ( cells_inspected.length == num_of_rows ) win = true;
-		}
-		// Check the diagonals
-		// always have 2 diagonals
-		// From left up to right down
-		if ( !win )
-		{
-			cells_inspected = cells.filter(":mod("+(num_of_rows+1)+")").filter("."+current_class);
-			if ( cells_inspected.length == num_of_rows ) win = true;
-			else{
-				// From right down to left up
-				cells_inspected = cells.filter(":mod("+(num_of_rows-1)+"):not(:last,:first)").filter("."+current_class);
-				if ( cells_inspected.length == num_of_rows ) win = true;					
-			}
-		}
-	}
-	
-	if ( win ){
-		disableGame();
-		cells_inspected.addClass("win");
-		++players[current_player].wins;
-		$("#winner #winner_name").text(players[current_player].name);
-		$("#"+players[current_player].score_el).text(players[current_player].wins);
-		$(".end_game").show();
-	} else {
-		// Save the trouble and just restart the game since it's a dead end
-		if ( $("#game_map .marked").length == num_of_rows * num_of_cols ) $("#ask_restart").show();
-	}
-	return win;
+
+const winOccurs = (currentPlayer) => {
+    
+    console.log(squares);
+    if ($('.square.r1.c1').text() === playerO && $('.square.r1.c2').text() === playerO && $('.square.r1.c3').text() === playerO) {
+        console.log(`${currentPlayer} has won the top row!!!`);
+        return true;
+    }
+    if ($('.square.r1.c1').text() === playerX && $('.square.r1.c2').text() === playerX && $('.square.r1.c3').text() === playerX) {
+        console.log(`${currentPlayer} has won the top row!!!`);
+        return true;
+    }
+    
+    else if ($('.square.r2.c1').text() === playerO && $('.square.r2.c2').text() === playerO && $('.square.r2.c3').text() === playerO) {
+        console.log(`${currentPlayer} has won the middle row!!!`);
+        return true;
+    }
+    else if ($('.square.r2.c1').text() === playerX && $('.square.r2.c2').text() === playerX && $('.square.r2.c3').text() === playerX) {
+        console.log(`${currentPlayer} has won the middle row!!!`);
+        return true;
+    }
+    
+    else if ($('.square.r3.c1').text() === playerO && $('.square.r3.c2').text() === playerO && $('.square.r3.c3').text() === playerO) {
+        console.log(`${currentPlayer} has won the bottom row!!!`);
+        return true;
+    }
+    else if ($('.square.r3.c1').text() === playerX && $('.square.r3.c2').text() === playerX && $('.square.r3.c3').text() === playerX) {
+        console.log(`${currentPlayer} has won the bottom row!!!`);
+        return true;
+    }
+    
+    else if ($('.square.r1.c1').text() === playerO && $('.square.r2.c1').text() === playerO && $('.square.r3.c1').text() === playerO) {
+        console.log(`${currentPlayer} has won the left row!!!`);
+        return true;
+    }
+    else if ($('.square.r1.c1').text() === playerX && $('.square.r2.c1').text() === playerX && $('.square.r3.c1').text() === playerX) {
+        console.log(`${currentPlayer} has won the left row!!!`);
+        return true;
+    }
+    else if ($('.square.r1.c2').text() === playerO&& $('.square.r2.c2').text() === playerO && $('.square.r3.c3').text() === playerO) {
+        console.log(`${currentPlayer} has won the vertical row!!!`);
+        return true;
+    }
+    else if ($('.square.r1.c2').text() === playerX && $('.square.r2.c2').text() === playerX && $('.square.r3.c3').text() === playerX) {
+        console.log(`${currentPlayer} has won the vertical row!!!`);
+        return true;
+    }
+    else if ($('.square.r1.c3').text() === playerO && $('.square.r2.c3').text() === playerO && $('.square.r3.c3').text() === playerO) {
+        console.log(`${currentPlayer} has won the vertical left row!!!`);
+        return true;
+    }
+    else if ($('.square.r1.c3').text() === playerX && $('.square.r2.c3').text() === playerX && $('.square.r3.c3').text() === playerX) {
+        console.log(`${currentPlayer} has won the vertical left row!!!`);
+        return true;
+    }
+    else if ($('.square.r1.c1').text() === playerO && $('.square.r2.c2').text() === playerO && $('.square.r3.c3').text() === playerO) {
+        console.log(`${currentPlayer} has won the left diagonal row!!!`);
+        return true;
+    }
+    else if ($('.square.r1.c1').text() === playerX && $('.square.r2.c2').text() === playerX && $('.square.r3.c3').text() === playerX) {
+        console.log(`${currentPlayer} has won the left diagonal row!!!`);
+        return true;
+    }
+    else if ($('.square.r1.c3').text() === playerO && $('.square.r2.c3').text() === playerO && $('.square.r3.c3').text() === playerO) {
+        console.log(`${currentPlayer} has won the right row!!!`);
+        return true;
+    } 
+    else if ($('.square.r1.c3').text() === playerX && $('.square.r2.c3').text() === playerX && $('.square.r3.c3').text() === playerX) {
+        console.log(`${currentPlayer} has won the right row!!!`);
+        return true;
+    } 
+    else if ($('.square.r1.c3').text() === playerX && $('.square.r2.c2').text() === playerX && $('.square.r3.c1').text() === playerX) {
+        console.log(`${currentPlayer} has won`);
+        return true;
+    } 
+    else if ($('.square.r1.c3').text() === playerO && $('.square.r2.c2').text() === playerO && $('.square.r3.c1').text() === playerO) {
+        console.log(`${currentPlayer} has won`);
+        return true;
+    }
 };
+//button reset
+restart.addEventListener("click", () => {
+    squares.forEach((square) => {
+      square.innerText = "";
+    });
+    currentPlayer = playerO;
+});
+startGame ();
