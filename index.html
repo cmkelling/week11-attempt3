@@ -12,10 +12,31 @@
 
     <h1 class="container">Tic Tac Toe</h1>
 
-    <span id="play_name"></span> Make your move <span id="player_mark"></span>
+    <h3>
+		<span id="player_name"></span>make your move (<span id="player_mark"></span>)
+	</h3>
 
-    <div class="game_map"></div>
+    <div id="game_map"></div>
 
+	<table>
+		<tr>
+			<th></th>
+			<th>Player X</th>
+			<th>Player O</th>
+		</tr>
+		<tr>
+			<th>Won</th>
+			<td id="player1_wins">0</td>
+			<td id="player2_wins">0</td>
+		</tr>
+	</table>
+	<h3 id="winner" class="end_game">
+		And the winner is: <span id="winner_name"></span>
+	</h3>
+	<div id="ask_restart" class="end_game">
+		Would you like to play again? <br>
+        <button id="restart_game" type="reset">reset</button>
+	</div>
 
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>

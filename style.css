@@ -20,10 +20,33 @@
     line-height:0px
 }
 
-.game_map.playerX_cell{
+#game_map.playerX_cell{
     color: cornflowerblue;
 }
 
-.game_map.playerO_cell{
+#game_map.playerO_cell{
     color:blueviolet;
+}
+
+#game_map .win{
+	background: #b0d8c2;
+}
+#player_mark, #player_name{
+	padding: 0px 3px;
+}
+.end_game{
+	display: none;
+}
+#winner_name{
+	text-decoration: underline;
+}
+table{
+	clear: both;
+}
+td{
+	text-align: center;
+}
+
+#game_map .hover{
+	background: #b3cbe3;
 }

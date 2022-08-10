@@ -1,12 +1,12 @@
 //Table set up
 var num_of_cols = num_of_rows = 3;
-$(document).ready(function(){
-	$("#restart_game").bind("click", restartGame);
+$(document).jquery(function(){
+	$("#restart_game").click.bind("click", restartGame);
 	// Expand jQuery with some selectors
-	$.expr[":"].mod = function(el, i, m) {
+	$.expr["Selectors#pseudos"].mod = function(el, i, m) {
 		return i % m[3] === 0
 	};  
-	$.expr[":"].sub_mod = function(el, i, m) {
+	$.expr["Selectors#pseudos"].sub_mod = function(el, i, m) {
 		var params = m[3].split(",");
 		return (i-params[0]) % params[1] === 0
 	};  
@@ -25,12 +25,12 @@ function initGame(){
 	
 	}
 
-	$("#game_map .cell").bind("click", playMove).bind('mouseover', hoverCell).bind('mouseout', leaveCell);
+	$("#game_map.cell").click.bind("click", playMove).bind('mouseover', hoverCell).bind('mouseout', leaveCell);
 
 	initTurn(current_player);
 };
 function disableGame(ev){
-	$("#game_map .cell").unbind("click").unbind("mouseover").unbind("mouseout");
+	$("#game_map.cell").click.unbind("click").unbind("mouseover").unbind("mouseout");
 };
 function restartGame(ev){
 	ev.preventDefault();
@@ -64,7 +64,7 @@ function initTurn(){
     $("player_mark").text(players[current_player].mark);
 }
 
-$(".game_map.cell").bind("click", playMove).bind('mouseover', hoverCell).bind("mouseout", leaveCell);
+$(".game_map.cell").click.bind("click", playMove).bind('mouseover', hoverCell).bind("mouseout", leaveCell);
 
 function hoverCell(ev){
     $(this).addClass("hover");
@@ -101,29 +101,22 @@ function checkAndProcessWin(){
 		var cells_inspected = {};
 		for (var row=1; row <= num_of_rows && !win; ++row ) 
 		{
-			cells_inspected = cells
-								.filter(":lt("+num_of_cols*row+")")
-								.filter(":eq("+(num_of_cols*(row-1))+"),:gt("+(num_of_cols*(row-1))+")")
-								.filter("."+current_class);
+			cells_inspected = cells.filter(":lt("+num_of_cols*row+")").filter(":eq("+(num_of_cols*(row-1))+"),:gt("+(num_of_cols*(row-1))+")").filter("."+current_class);
 			if ( cells_inspected.length == num_of_cols ) win = true;
 		}
 		// Check the cols
 		for (var col=0; col <= num_of_cols && !win; ++col ) 
 		{
-			cells_inspected = cells
-								.filter(":sub_mod("+col+","+num_of_rows+")")
-								.filter("."+current_class);
+			cells_inspected = cells.filter(":sub_mod("+col+","+num_of_rows+")").filter("."+current_class);
 								
 			if ( cells_inspected.length == num_of_rows ) win = true;
 		}
 		// Check the diagonals
-		// We always have 2 diagonals
+		// always have 2 diagonals
 		// From left up to right down
 		if ( !win )
 		{
-			cells_inspected = cells
-								.filter(":mod("+(num_of_rows+1)+")")
-								.filter("."+current_class);
+			cells_inspected = cells.filter(":mod("+(num_of_rows+1)+")").filter("."+current_class);
 			if ( cells_inspected.length == num_of_rows ) win = true;
 			else{
 				// From right down to left up
@@ -141,7 +134,7 @@ function checkAndProcessWin(){
 		$("#"+players[current_player].score_el).text(players[current_player].wins);
 		$(".end_game").show();
 	} else {
-		// Save the trouble and just restart the game since it a dead end
+		// Save the trouble and just restart the game since it's a dead end
 		if ( $("#game_map .marked").length == num_of_rows * num_of_cols ) $("#ask_restart").show();
 	}
 	return win;
