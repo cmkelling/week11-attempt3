@@ -1,5 +1,5 @@
-let square = $('.square');
-let ticGird = $('#tic.Grid');
+let square = ($('.square'));
+let ticGird = ($('#tic.Grid'));
 const squares = Array.from(document.getElementsByClassName("square"));
 let playerO = 'O';
 let playerX = 'X';
