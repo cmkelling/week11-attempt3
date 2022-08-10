@@ -20,11 +20,11 @@
     line-height:0px
 }
 
-#game_map, playerX_cell{
+/* #game_map, playerX_cell{
     color: cornflowerblue;
-}
+} */
 
-#game_map.playerO_cell{
+/* #game_map.playerO_cell{
     color:blueviolet;
 }
 
@@ -49,4 +49,4 @@ td{
 
 #game_map .hover{
 	background: #b3cbe3;
-}
+} */

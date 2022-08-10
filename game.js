@@ -1,6 +1,6 @@
 //Table set up
 var num_of_cols = num_of_rows = 3;
-$(document).jquery(function(){
+($(document).jquery(function(){
 	$("#restart_game").click.bind("click", restartGame);
 	// Expand jQuery with some selectors
 	$.expr["Selectors#pseudos"].mod = function(el, i, m) {
@@ -11,7 +11,7 @@ $(document).jquery(function(){
 		return (i-params[0]) % params[1] === 0
 	};  
 	initGame();
-});
+}));
 
 function initGame(){
 	$("#game_map").empty();
