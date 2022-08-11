@@ -27,7 +27,7 @@ body {
 .square {
     border: 10px gray solid;
     background-color: hsla(247, 52%, 55%, 0.3);
-    font-size: 150px;
+    font-size: 100px;
     text-align: center;
     height:150px;
     width: 150px;
