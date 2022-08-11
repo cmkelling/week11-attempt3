@@ -1,3 +1,4 @@
+console.log("This is my tic tac toe game");
 let square = ($('.square'));
 let ticGird = $('#tic.Grid');
 const squares = Array.from(document.getElementsByClassName("square"));
